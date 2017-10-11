@@ -1,6 +1,7 @@
-local Anim = require("Animation")
-local Sprite = require("Sprite")
-local Key = require("Keyboard")
+local Anim = require("lib.Animation")
+local Sprite = require("lib.Sprite")
+local Key = require("lib.Keyboard")
+local Event = require("lib.Events")
 
 local heroAtlas
 
@@ -12,10 +13,12 @@ local punch = Anim(16, 80, 16, 16, 3, 3, 14, false)
 
 local punchSound
 
+local e
+
 function love.load()
 	Key:hookLoveEvents()
 	love.graphics.setDefaultFilter("nearest", "nearest")
-	heroAtlas = love.graphics.newImage("gfx/hero.png")
+	heroAtlas = love.graphics.newImage("assets/gfx/hero.png")
 	spr = Sprite(heroAtlas, 100, 100, 16, 16, 10, 10, 0)
 	spr:addAnimation("idle", idle)
 	spr:addAnimation("run", run)
@@ -23,7 +26,16 @@ function love.load()
 	spr:addAnimation("punch", punch)
 	spr:animate("run")
 
-	punchSound = love.audio.newSource("sfx/punch.ogg", "static")
+	e = Event()
+	e:add("onSpace")
+	e:hook("onSpace", onSpace)
+
+
+	punchSound = love.audio.newSource("assets/sfx/punch.ogg", "static")
+end
+
+function onSpace()
+	print("Spaced!")
 end
 
 function love.update(dt)
@@ -33,6 +45,9 @@ function love.update(dt)
 		love.audio.stop(punchSound)
 		love.audio.play(punchSound)
 		spr:animate("punch")
+		e:invoke("onSpace")
+	elseif Key:keyDown("u") then
+		e:unhook("onSpace", onSpace)
 	elseif Key:keyDown("escape") then
 		love.event.quit()
 	end
