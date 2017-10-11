@@ -6,8 +6,8 @@ local heroAtlas
 
 local spr
 local idle = Anim(16, 16, 16, 16, 4, 4, 6)
-local run = Anim(16, 32, 16, 16, 6, 6, 10)
-local swim = Anim(16, 64, 16, 16, 6, 6, 10)
+local run = Anim(16, 32, 16, 16, 6, 6, 12)
+local swim = Anim(16, 64, 16, 16, 6, 6, 12)
 local punch = Anim(16, 80, 16, 16, 3, 3, 14, false)
 
 local punchSound
