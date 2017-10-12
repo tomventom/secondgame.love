@@ -2,6 +2,7 @@
 Key = require("lib.Keyboard")
 local GPM = require("lib.GamepadMgr")
 local SM = require("lib.SceneMgr")
+local Event = require("lib.Events")
 
 local sm
 
@@ -11,8 +12,10 @@ function love.load()
 	-- Love2D game settings
 	love.graphics.setDefaultFilter("nearest", "nearest")
 
-	local font = love.graphics.newFont("assets/font.ttf", 21)
+	local font = love.graphics.newFont("assets/KGBLANK.ttf", 21)
 	love.graphics.setFont(font)
+
+	_G.events = Event(false)
 
 	Key:hookLoveEvents()
 
@@ -39,6 +42,8 @@ function love.update(dt)
 		sm:switch("MainMenu")
 	elseif Key:keyDown(".") then
 		sm:switch("Test")
+	elseif Key:keyDown("escape") then
+		love.event.quit()
 	end
 
 	sm:update(dt)

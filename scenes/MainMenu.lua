@@ -5,15 +5,32 @@ local MM = Scene:derive("MainMenu")
 
 function MM:new(sceneMgr)
 	self.super(sceneMgr)
-	self.button = Button(320, 240, 125, 125)
+	self.button = Button(320, 240, 160, 40, "Click Me")
+end
+
+function MM:enter()
+	_G.events:hook("onButtonClick", onClick)
+end
+
+function MM:exit()
+	_G.events:unhook("onButtonClick", onClick)
+end
+
+function onClick(button)
+	print("Button clicked: " .. button.label)
+end
+
+function MM:update(dt)
+	if Key:keyDown("space") then
+		self.button:enabled(not self.button.interactible)
+	end
+	self.button:update(dt)
 end
 
 function MM:draw()
-	love.graphics.clear(255, 80, 80)
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.clear(80, 80, 160)
 	self.button:draw()
-	love.graphics.setColor(0, 0, 0)
-	love.graphics.print("Main Menu", 160, 50, 0 ,3)
+	love.graphics.print("Main Menu", 250, 50)
 end
 
 return MM

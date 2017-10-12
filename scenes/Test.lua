@@ -40,8 +40,6 @@ function T:update(dt)
 		love.audio.stop(punchSound)
 		love.audio.play(punchSound)
 		spr:animate("punch")
-	elseif Key:keyDown("escape") then
-		love.event.quit()
 	end
 
 	if spr.currentAnim == "punch" and spr:animationFinished() then
