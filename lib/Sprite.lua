@@ -5,10 +5,10 @@ local Vector2 = require("lib.Vector2")
 local Sprite = Class:derive("Sprite")
 
 function Sprite:new(atlas, x, y, w, h, sx, sy, angle)
+	self.pos = Vector2(x or 0, y or 0)
 	self.w = w
 	self.h = h
 	self.flip = Vector2(1, 1)
-	self.pos = Vector2(x or 0, y or 0)
 	self.scale = Vector2(sx or 1, sy or 1)
 	self.atlas = atlas
 	self.animations = {}

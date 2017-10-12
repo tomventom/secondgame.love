@@ -54,6 +54,7 @@ end
 
 function T:draw()
 	love.graphics.clear(80, 80, 255)
+	love.graphics.setColor(255, 255, 255)
 	spr:draw()
 end
 
