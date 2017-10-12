@@ -1,7 +1,8 @@
 local Class = require("lib.Class")
-local Sprite = Class:derive("lib.Sprite")
 local Anim = require("lib.Animation")
 local Vector2 = require("lib.Vector2")
+
+local Sprite = Class:derive("Sprite")
 
 function Sprite:new(atlas, x, y, w, h, sx, sy, angle)
 	self.w = w
@@ -47,8 +48,11 @@ function Sprite:animationFinished()
 	return true
 end
 
-function Sprite:addAnimation(name, anim)
-	self.animations[name] = anim
+function Sprite:addAnimations(animations)
+	assert(type(animations) == "table", "animations paramater must be a table!")
+	for k, v in pairs(animations) do
+		self.animations[k] = v
+	end
 end
 
 function Sprite:update(dt)

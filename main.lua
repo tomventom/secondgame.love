@@ -1,66 +1,51 @@
-local Anim = require("lib.Animation")
-local Sprite = require("lib.Sprite")
-local Key = require("lib.Keyboard")
-local Event = require("lib.Events")
 
-local heroAtlas
+Key = require("lib.Keyboard")
+local GPM = require("lib.GamepadMgr")
+local SM = require("lib.SceneMgr")
 
-local spr
-local idle = Anim(16, 16, 16, 16, 4, 4, 6)
-local run = Anim(16, 32, 16, 16, 6, 6, 12)
-local swim = Anim(16, 64, 16, 16, 6, 6, 12)
-local punch = Anim(16, 80, 16, 16, 3, 3, 14, false)
+local sm
 
-local punchSound
-
-local e
+local gpm = GPM({"assets/gamecontrollerdb.txt"})
 
 function love.load()
-	Key:hookLoveEvents()
+	-- Love2D game settings
 	love.graphics.setDefaultFilter("nearest", "nearest")
-	heroAtlas = love.graphics.newImage("assets/gfx/hero.png")
-	spr = Sprite(heroAtlas, 100, 100, 16, 16, 10, 10, 0)
-	spr:addAnimation("idle", idle)
-	spr:addAnimation("run", run)
-	spr:addAnimation("swim", swim)
-	spr:addAnimation("punch", punch)
-	spr:animate("run")
 
-	e = Event()
-	e:add("onSpace")
-	e:hook("onSpace", onSpace)
+	local font = love.graphics.newFont("assets/font.ttf", 21)
+	love.graphics.setFont(font)
 
+	Key:hookLoveEvents()
 
-	punchSound = love.audio.newSource("assets/sfx/punch.ogg", "static")
+	gpm.event:hook("controllerAdded", onControllerAdded)
+	gpm.event:hook("controllerRemoved", onControllerRemoved)
+
+	sm = SM("scenes", {"MainMenu", "Test"})
+	sm:switch("MainMenu")
+
 end
 
-function onSpace()
-	print("Spaced!")
+function onControllerAdded(joyID)
+	print("controller " .. joyID .. " added")
+end
+
+function onControllerRemoved(joyID)
+	print("controller " .. joyID .. " removed")
 end
 
 function love.update(dt)
 	if dt > 0.04 then return end
 
-	if Key:keyDown("space") and spr.currentAnim ~= "punch" then
-		love.audio.stop(punchSound)
-		love.audio.play(punchSound)
-		spr:animate("punch")
-		e:invoke("onSpace")
-	elseif Key:keyDown("u") then
-		e:unhook("onSpace", onSpace)
-	elseif Key:keyDown("escape") then
-		love.event.quit()
+	if Key:keyDown(",") then
+		sm:switch("MainMenu")
+	elseif Key:keyDown(".") then
+		sm:switch("Test")
 	end
 
-	if spr.currentAnim == "punch" and spr:animationFinished() then
-		spr:animate("idle")
-	end
+	sm:update(dt)
 	Key:update(dt)
-	spr:update(dt)
+	gpm:update(dt)
 end
 
 function love.draw()
-	love.graphics.clear(80, 80, 255)
-	spr:draw()
-
+	sm:draw()
 end

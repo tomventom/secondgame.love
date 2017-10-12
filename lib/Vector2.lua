@@ -1,5 +1,5 @@
 local Class = require("lib.Class")
-local Vector2 = Class:derive("lib.Vector2")
+local Vector2 = Class:derive("Vector2")
 
 function Vector2:new(x, y)
 	self.x = x or 0

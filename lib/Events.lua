@@ -1,6 +1,6 @@
 local Class = require("lib.Class")
 
-local Events = Class:derive("lib.Events")
+local Events = Class:derive("Events")
 
 function Events:new(eventMustExist)
 	self.handlers = {}
