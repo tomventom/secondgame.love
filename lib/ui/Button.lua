@@ -26,7 +26,7 @@ function Button:new(x, y, w, h, label)
 	-- button colors
 	self.normal = color(100, 190, 50, 180)
 	self.highlight = color(100, 190, 50, 255)
-	self.pressed = color(100, 255, 50, 255)
+	self.pressed = color(100, 240, 50, 255)
 	self.disabled = grey(128, 128)
 	-- text colors
 	self.textNormal = color(255)
@@ -36,6 +36,23 @@ function Button:new(x, y, w, h, label)
 	self.color = self.normal
 	self.prevLeftClick = false
 	self.interactible = true
+end
+
+function Button:setTextColors(normal, disabled)
+	assert(type(normal) == "table", "normal parameter must be a table!")
+	assert(type(disabled) == "table", "disabled parameter must be a table!")
+	self.textNormal = normal
+	self.textDisabled = disabled
+end
+
+function Button:setButtonColors(normal, highlight, pressed)
+	assert(type(normal) == "table", "normal parameter must be a table!")
+	assert(type(highlight) == "table", "highlight parameter must be a table!")
+	assert(type(pressed) == "table", "pressed parameter must be a table!")
+
+	self.normal = normal
+	self.highlight = highlight
+	self.pressed = pressed
 end
 
 function Button:left(x)
@@ -89,14 +106,12 @@ function Button:draw()
 	local r,g,b,a = love.graphics.getColor()
 	love.graphics.setColor(self.color)
 	love.graphics.rectangle("fill", self.pos.x - self.w / 2, self.pos.y - self.h / 2, self.w, self.h, 4, 4)
-	love.graphics.setColor(r,g,b,a)
 
 	local f = love.graphics.getFont()
-	local fw = f:getWidth(self.label)
+	local _, lines = f:getWrap(self.label, self.w)
 	local fh = f:getHeight()
-	r,g,b,a = love.graphics.getColor()
 	love.graphics.setColor(self.textColor)
-	love.graphics.print(self.label, self.pos.x - fw / 2, self.pos.y - fh / 2)
+	love.graphics.printf(self.label, self.pos.x - self.w / 2, self.pos.y - (fh / 2 * #lines), self.w, "center")
 	love.graphics.setColor(r,g,b,a)
 end
 
