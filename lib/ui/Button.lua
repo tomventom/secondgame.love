@@ -1,15 +1,8 @@
 local Class = require("lib.Class")
 local Vector2 = require("lib.Vector2")
+local U = require("lib.Utils")
 
 local Button = Class:derive("Button")
-
-local function color(r, g, b, a)
-	return {r, g or r, b or r, a or 255}
-end
-
-local function grey(level, a)
-	return {level, level, level, a or 255}
-end
 
 local function mouseInBounds(self, mouseX, mouseY)
 	return mouseX >= self.pos.x - self.w / 2 and
@@ -18,19 +11,19 @@ local function mouseInBounds(self, mouseX, mouseY)
 		mouseY <= self.pos.y + self.h / 2
 end
 
-function Button:new(x, y, w, h, label)
+function Button:new(x, y, w, h, text)
 	self.pos = Vector2(x or 0, y or 0)
 	self.w = w
 	self.h = h
-	self.label = label
+	self.text = text
 	-- button colors
-	self.normal = color(100, 190, 50, 180)
-	self.highlight = color(100, 190, 50, 255)
-	self.pressed = color(100, 240, 50, 255)
-	self.disabled = grey(128, 128)
+	self.normal = U.color(100, 190, 50, 180)
+	self.highlight = U.color(100, 190, 50, 255)
+	self.pressed = U.color(100, 240, 50, 255)
+	self.disabled = U.grey(128, 128)
 	-- text colors
-	self.textNormal = color(255)
-	self.textDisabled = grey(180, 255)
+	self.textNormal = U.color(255)
+	self.textDisabled = U.grey(180, 255)
 
 	self.textColor = self.textNormal
 	self.color = self.normal
@@ -108,10 +101,10 @@ function Button:draw()
 	love.graphics.rectangle("fill", self.pos.x - self.w / 2, self.pos.y - self.h / 2, self.w, self.h, 4, 4)
 
 	local f = love.graphics.getFont()
-	local _, lines = f:getWrap(self.label, self.w)
+	local _, lines = f:getWrap(self.text, self.w)
 	local fh = f:getHeight()
 	love.graphics.setColor(self.textColor)
-	love.graphics.printf(self.label, self.pos.x - self.w / 2, self.pos.y - (fh / 2 * #lines), self.w, "center")
+	love.graphics.printf(self.text, self.pos.x - self.w / 2, self.pos.y - (fh / 2 * #lines), self.w, "center")
 	love.graphics.setColor(r,g,b,a)
 end
 
