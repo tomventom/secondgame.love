@@ -15,13 +15,8 @@ local punchSound
 local T = Scene:derive("Test")
 
 function T:new(sceneMgr)
-	self.super:new(sceneMgr)
-
+	T.super.new(self, sceneMgr)
 	heroAtlas = love.graphics.newImage("assets/gfx/hero.png")
-	spr = Sprite(heroAtlas, 100, 100, 16, 16, 10, 10, 0)
-	spr:addAnimations({idle = idle, run = run, swim = swim, punch = punch})
-	spr:animate("run")
-
 	punchSound = love.audio.newSource("assets/sfx/punch.ogg", "static")
 
 end
@@ -30,11 +25,15 @@ local entered = false
 function T:enter()
 	if not entered then
 		entered = true
-		print("entered test")
+		spr = Sprite(heroAtlas, 100, 100, 16, 16, 10, 10, 0)
+		spr:addAnimations({idle = idle, run = run, swim = swim, punch = punch})
+		spr:animate("run")
+		self.em:add(spr)
 	end
 end
 
 function T:update(dt)
+	self.super.update(self, dt)
 
 	if Key:keyDown("space") and spr.currentAnim ~= "punch" then
 		love.audio.stop(punchSound)
@@ -45,15 +44,12 @@ function T:update(dt)
 	if spr.currentAnim == "punch" and spr:animationFinished() then
 		spr:animate("idle")
 	end
-
-	spr:update(dt)
-
 end
 
 function T:draw()
 	love.graphics.clear(80, 80, 255)
 	love.graphics.setColor(255, 255, 255)
-	spr:draw()
+	self.super.draw(self)
 end
 
 return T

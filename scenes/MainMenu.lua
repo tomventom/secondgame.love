@@ -45,7 +45,7 @@ function MM:onClick(button)
 end
 
 function MM:update(dt)
-	self.super.update(dt)
+	self.super.update(self, dt)
 	-- if Key:keyDown("space") then
 	-- 	self.startButton:enabled(not self.startButton.interactible)
 	-- end
@@ -53,7 +53,7 @@ end
 
 function MM:draw()
 	love.graphics.clear(80, 80, 160)
-	self.super:draw()		
+	self.super.draw(self)
 end
 
 return MM
