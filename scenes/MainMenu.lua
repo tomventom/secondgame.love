@@ -1,6 +1,8 @@
 local Scene = require("lib.Scene")
 local Button = require("lib.ui.Button")
 local Label = require("lib.ui.Label")
+local TextField = require("lib.ui.TextField")
+local U = require("lib.Utils")
 
 local MM = Scene:derive("MainMenu")
 
@@ -13,6 +15,7 @@ end
 local entered = false
 
 function MM:enter()
+	MM.super.enter(self)
 	if not entered then
 		entered = true
 		local sw = love.graphics.getWidth()
@@ -23,10 +26,11 @@ function MM:enter()
 		exitButton:setButtonColors({170, 50, 50, 220}, {220, 40, 40}, {255, 20, 20})
 
 		local mmtext = Label(0, 20, sw, 40, "Main Menu")
-
+		local tf = TextField(80, 60, 100, 60, "hello", U.color(0, 255, 0), "left")
 		self.em:add(startButton)
 		self.em:add(exitButton)
-		self.em:add(mmtext)		
+		self.em:add(mmtext)	
+		self.em:add(tf)	
 	end
 	_G.events:hook("onButtonClick", self.click)
 end

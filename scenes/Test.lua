@@ -23,9 +23,10 @@ end
 
 local entered = false
 function T:enter()
+	T.super.enter(self)	
 	if not entered then
 		entered = true
-		spr = Sprite(heroAtlas, 100, 100, 16, 16, 10, 10, 0)
+		spr = Sprite(heroAtlas, 100, 100, 16, 16, 4, 4, 0)
 		spr:addAnimations({idle = idle, run = run, swim = swim, punch = punch})
 		spr:animate("run")
 		self.em:add(spr)
@@ -47,8 +48,7 @@ function T:update(dt)
 end
 
 function T:draw()
-	love.graphics.clear(80, 80, 255)
-	love.graphics.setColor(255, 255, 255)
+	love.graphics.clear(80, 80, 200)
 	self.super.draw(self)
 end
 

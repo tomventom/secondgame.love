@@ -17,6 +17,11 @@ local function indexOf(eventTable, callback)
 	return -1
 end
 
+-- returns true if the event exists
+function Events:exists(eventType)
+	return self.handlers[eventType] ~= nil
+end
+
 -- add a new event eventType to the table
 function Events:add(eventType)
 	assert(self.handlers[eventType] == nil, "Event of type " .. eventType .. " already exists!")

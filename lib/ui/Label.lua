@@ -24,7 +24,7 @@ function Label:draw()
     local fh = f:getHeight()
     
 	love.graphics.setColor(self.color)    
-    love.graphics.printf(self.text, self.pos.x, self.pos.y - (fh / 2 * #lines), self.w, "center")    
+    love.graphics.printf(self.text, self.pos.x, self.pos.y - (fh / 2 * #lines), self.w, self.align)    
 
     -- love.graphics.rectangle("line", self.pos.x, self.pos.y - self.h / 2, self.w, self.h)
 

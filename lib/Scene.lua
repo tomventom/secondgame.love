@@ -8,25 +8,15 @@ function Scene:new(sceneMgr)
 	self.em = EntityMgr()
 end
 
-function Scene:enter()
+function Scene:enter() end
 
-end
+function Scene:update(dt)	self.em:update(dt) end
 
-function Scene:update(dt)
-	self.em:update(dt)
-end
-
-function Scene:draw()
-	self.em:draw()
-end
+function Scene:draw()	self.em:draw() end
 
 -- called when the scene is removed from the scene manager
-function Scene:destroy()
+function Scene:destroy() end
 
-end
-
-function Scene:exit()
-
-end
+function Scene:exit() end
 
 return Scene
