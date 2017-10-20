@@ -30,6 +30,10 @@ function Keyboard:hookLoveEvents()
 		keyStates[key] = false
 		_G.events:invoke("keyReleased", key)		
 	end
+
+	function love.textinput(text)
+		_G.events:invoke("textInput", text)				
+    end
 end
 
 return Keyboard

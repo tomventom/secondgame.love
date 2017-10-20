@@ -26,7 +26,7 @@ function MM:enter()
 		exitButton:setButtonColors({170, 50, 50, 220}, {220, 40, 40}, {255, 20, 20})
 
 		local mmtext = Label(0, 20, sw, 40, "Main Menu")
-		local tf = TextField(80, 60, 100, 60, "hello", U.color(0, 255, 0), "left")
+		local tf = TextField(sw / 2 - 50, 60, 100, 40, "hello", U.grey(196), "left")
 		self.em:add(startButton)
 		self.em:add(exitButton)
 		self.em:add(mmtext)	
