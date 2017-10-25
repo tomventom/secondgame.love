@@ -8,22 +8,22 @@ local MM = Scene:derive("MainMenu")
 
 function MM:new(sceneMgr)
 	MM.super.new(self, sceneMgr)
-	
+
 	local sw = love.graphics.getWidth()
 	local sh = love.graphics.getHeight()
 
-	local startButton = Button(sw/2, sh/2 - 30, 140, 40, "Start")
-	local exitButton = Button(sw/2, sh/2 + 30, 140, 40, "Exit")
+	local startButton = Button(sw / 2, sh / 2 - 30, 140, 40, "Start")
+	local exitButton = Button(sw / 2, sh / 2 + 30, 140, 40, "Exit")
 	exitButton:setButtonColors({170, 50, 50, 220}, {220, 40, 40}, {255, 20, 20})
 
 	local mmtext = Label(0, 20, sw, 40, "Main Menu")
 	self.tf = TextField(sw / 2 - 50, 60, 100, 40, "hello", U.grey(196), "left")
 	self.em:add(startButton)
 	self.em:add(exitButton)
-	self.em:add(mmtext)	
-	self.em:add(self.tf)	
+	self.em:add(mmtext)
+	self.em:add(self.tf)
 
-	self.click = function(button) self:onClick(button) end	
+	self.click = function(button) self:onClick(button) end
 
 end
 
@@ -35,7 +35,7 @@ function MM:enter()
 end
 
 function MM:exit()
-	MM.super.exit(self)	
+	MM.super.exit(self)
 	_G.events:unhook("onButtonClick", self.click)
 end
 
@@ -60,7 +60,7 @@ function MM:update(dt)
 	local down = love.mouse.isDown(1)
 
 	if down and not prevDown then
-		if U.pointInRect({x = xPos,y = yPos}, self.tf:getRect()) then
+		if U.pointInRect({x = xPos, y = yPos}, self.tf:getRect()) then
 			self.tf:setFocus(true)
 		else
 			self.tf:setFocus(false)

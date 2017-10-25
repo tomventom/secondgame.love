@@ -4,13 +4,6 @@ local U = require("lib.Utils")
 
 local Button = Class:derive("Button")
 
-local function mouseInBounds(self, mouseX, mouseY)
-	return mouseX >= self.pos.x - self.w / 2 and
-		mouseX <= self.pos.x + self.w / 2 and
-		mouseY >= self.pos.y - self.h / 2 and
-		mouseY <= self.pos.y + self.h / 2
-end
-
 function Button:new(x, y, w, h, text)
 	self.pos = Vector2(x or 0, y or 0)
 	self.w = w
@@ -78,7 +71,7 @@ function Button:update(dt)
 	if not self.interactible then return end
 	x, y = love.mouse.getPosition()
 	local leftClick = love.mouse.isDown(1)
-	local inBounds = mouseInBounds(self, x, y)
+	local inBounds = U.mouseInBounds(self, x, y)
 
 	if inBounds and not leftClick then
 		self.color = self.highlight
@@ -96,7 +89,7 @@ function Button:update(dt)
 end
 
 function Button:draw()
-	local r,g,b,a = love.graphics.getColor()
+	local r, g, b, a = love.graphics.getColor()
 	love.graphics.setColor(self.color)
 	love.graphics.rectangle("fill", self.pos.x - self.w / 2, self.pos.y - self.h / 2, self.w, self.h, 4, 4)
 
@@ -105,7 +98,7 @@ function Button:draw()
 	local fh = f:getHeight()
 	love.graphics.setColor(self.textColor)
 	love.graphics.printf(self.text, self.pos.x - self.w / 2, self.pos.y - (fh / 2 * #lines), self.w, "center")
-	love.graphics.setColor(r,g,b,a)
+	love.graphics.setColor(r, g, b, a)
 end
 
 return Button

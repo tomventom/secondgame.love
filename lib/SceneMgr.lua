@@ -39,7 +39,7 @@ end
 
 function SM:remove(sceneName)
 	if sceneName then
-		for k,_ in pairs(self.scenes) do
+		for k, _ in pairs(self.scenes) do
 			if k == sceneName then
 				self.scenes[k]:destroy()
 				self.scenes[k] = nil
@@ -78,7 +78,7 @@ end
 -- returns a list of all the scene names that the scene manager knows about
 function SM:getAvailableScenes()
 	local sceneNames = {}
-	for k,_ in pairs(self.scenes) do
+	for k, _ in pairs(self.scenes) do
 		sceneNames[#sceneNames + 1] = k
 	end
 	return sceneNames

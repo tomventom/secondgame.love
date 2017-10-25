@@ -56,9 +56,9 @@ function EM:update(dt)
             table.remove(self.entities, i)
             i = i - 1
         end
-        
+
         if e.enabled then
-            if not e.started then 
+            if not e.started then
                 e.started = true
                 if e.onStart then e:onStart() end
             else
