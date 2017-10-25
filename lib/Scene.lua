@@ -8,7 +8,15 @@ function Scene:new(sceneMgr)
 	self.em = EntityMgr()
 end
 
-function Scene:enter() end
+-- called when the scene is being switched to or entered
+function Scene:enter()
+	self.em:onEnter()
+end
+
+-- called when the scene is exited or switched out of
+function Scene:exit() 
+	self.em:onExit()
+end
 
 function Scene:update(dt)	self.em:update(dt) end
 
@@ -16,7 +24,5 @@ function Scene:draw()	self.em:draw() end
 
 -- called when the scene is removed from the scene manager
 function Scene:destroy() end
-
-function Scene:exit() end
 
 return Scene

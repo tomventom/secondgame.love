@@ -8,21 +8,46 @@ local TextField = Label:derive("TextField")
 function TextField:new(x, y, w, h, text, color, align)
     TextField.super.new(self, x, y, w, h, text, color, align)
     self.focus = false
+    self.focusedColor = U.grey(128)
+    self.unfocusedColor = U.grey(32)
+
+    self.bgColor = self.unfocusedColor
 
     self.keyPressed = function(key) if key == "backspace" then self:onTextInput(key) end end
     self.textInput = function(text) self:onTextInput(text) end
 
-    _G.events:hook("keyPressed", self.keyPressed)
-    _G.events:hook("textInput", self.textInput)
+end
+
+function TextField:getRect()
+    return {x = self.pos.x, y = self.pos.y  - self.h / 2, w = self.w, h = self.h}
 end
 
 function TextField:setFocus(focused)
     assert(type(focused) == "boolean", "parameter focused should be of type boolean")
     self.focus = focused
+    
+    if focused then 
+        self.bgColor = self.focusedColor
+    else
+        self.bgColor = self.unfocusedColor
+    end
+
+end
+
+function TextField:onEnter()
+    _G.events:hook("keyPressed", self.keyPressed)
+    _G.events:hook("textInput", self.textInput)
+end
+
+function TextField:onExit()
+    _G.events:unhook("keyPressed", self.keyPressed)
+    _G.events:unhook("textInput", self.textInput)
 end
 
 function TextField:onTextInput(text)
-    -- if not self.focus or not self.enabled then return end
+    if not self.focus or not self.enabled then return end
+
+
     if text == "backspace" then 
         -- get the byte offset to the last UTF-8 character in the string.
         local byteoffset = utf8.offset(self.text, -1)
@@ -39,7 +64,7 @@ function TextField:onTextInput(text)
 end
 
 function TextField:draw()
-    love.graphics.setColor(U.grey(32))
+    love.graphics.setColor(self.bgColor)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y - self.h / 2, self.w, self.h)
     TextField.super.draw(self)
 end
