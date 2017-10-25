@@ -15,18 +15,15 @@ function U.pointInRect(point, rect)
 		point.y < rect.y)
 end
 
-function U.mouseInBounds(self, mouseX, mouseY)
-	return mouseX >= self.pos.x - self.w / 2 and
-	mouseX <= self.pos.x + self.w / 2 and
-	mouseY >= self.pos.y - self.h / 2 and
-	mouseY <= self.pos.y + self.h / 2
-end
-
 function U.mouseInRect(rx, ry, rw, rh, mouseX, mouseY)
 	return mouseX >= rx - rw / 2 and
 	mouseX <= rx + rw / 2 and
 	mouseY >= ry - rh / 2 and
 	mouseY <= ry + rh / 2
+end
+
+function U.round(num)
+	return math.floor(num + 0.5)
 end
 
 return U

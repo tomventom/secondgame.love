@@ -19,7 +19,7 @@ function MM:new(sceneMgr)
 
 	local mmtext = Label(0, 20, sw, 40, "Main Menu")
 	self.tf = TextField(sw / 2 - 50, 60, 100, 40, "hello", U.grey(196), "left")
-	self.slider = Slider(sw / 2 - 100, 140, 200, 40)
+	self.slider = Slider(sw / 2 - 100, 140, 200, 40, "volume")
 
 	self.em:add(startButton)
 	self.em:add(exitButton)
@@ -28,6 +28,7 @@ function MM:new(sceneMgr)
 	self.em:add(self.slider)
 
 	self.click = function(button) self:onClick(button) end
+	self.sliderChanged = function(slider) self:onSliderChanged(slider) end
 
 end
 
@@ -36,11 +37,17 @@ local entered = false
 function MM:enter()
 	MM.super.enter(self)
 	_G.events:hook("onButtonClick", self.click)
+	_G.events:hook("onSliderChanged", self.sliderChanged)
 end
 
 function MM:exit()
 	MM.super.exit(self)
 	_G.events:unhook("onButtonClick", self.click)
+	_G.events:unhook("onSliderChanged", self.sliderChanged)
+end
+
+function MM:onSliderChanged(slider)
+	print(slider.id .. ": " .. slider:getValue())
 end
 
 function MM:onClick(button)

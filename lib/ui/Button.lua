@@ -67,11 +67,18 @@ function Button:enabled(enable)
 	end
 end
 
+function mouseInBounds(self, mouseX, mouseY)
+	return mouseX >= self.pos.x - self.w / 2 and
+	mouseX <= self.pos.x + self.w / 2 and
+	mouseY >= self.pos.y - self.h / 2 and
+	mouseY <= self.pos.y + self.h / 2
+end
+
 function Button:update(dt)
 	if not self.interactible then return end
 	local mx, my = love.mouse.getPosition()
 	local leftClick = love.mouse.isDown(1)
-	local inBounds = U.mouseInBounds(self, mx, my)
+	local inBounds = mouseInBounds(self, mx, my)
 
 	if inBounds and not leftClick then
 		self.color = self.highlight

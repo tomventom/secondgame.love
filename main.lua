@@ -37,6 +37,8 @@ end
 function love.update(dt)
 	if dt > 0.04 then return end
 
+	-- mx, my = love.mouse.getPosition()
+
 	if Key:keyDown(",") then
 		sm:switch("MainMenu")
 	elseif Key:keyDown(".") then
@@ -52,4 +54,5 @@ end
 
 function love.draw()
 	sm:draw()
+	-- love.graphics.print(mx .. " " .. my, mx + 10, my - 10, 0, .5, .5)
 end
