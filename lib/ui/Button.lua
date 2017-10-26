@@ -81,13 +81,13 @@ function Button:update(dt)
 	local inBounds = mouseInBounds(self, mx, my)
 
 	if inBounds and not leftClick then
-		self.color = self.highlight
-		if self.prevLeftClick then
+		if self.prevLeftClick and self.color == self.pressed then
 			_G.events:invoke("onButtonClick", self)
 		end
-	elseif inBounds and leftClick then
+		self.color = self.highlight
+	elseif inBounds and leftClick and not self.prevLeftClick then
 		self.color = self.pressed
-	else
+	elseif not inBounds then
 		self.color = self.normal
 	end
 

@@ -26,7 +26,7 @@ function Anim:reset()
 	self.done = false
 
 	self.offset.x = self.startOffset.x + (self.size.x * ((self.frames[self.index] - 1) % self.columnSize))
-	self.offset.y = self.startOffset.y + (self.size.y * math.floor((self.frames[self.index] -1) / self.columnSize))
+	self.offset.y = self.startOffset.y + (self.size.y * math.floor((self.frames[self.index] - 1) / self.columnSize))
 end
 
 function Anim:set(quad)
@@ -51,7 +51,7 @@ function Anim:update(dt, quad)
 				end
 			end
 			self.offset.x = self.startOffset.x + (self.size.x * ((self.frames[self.index] - 1) % self.columnSize))
-			self.offset.y = self.startOffset.y + (self.size.y * math.floor((self.frames[self.index] -1) / self.columnSize))
+			self.offset.y = self.startOffset.y + (self.size.y * math.floor((self.frames[self.index] - 1) / self.columnSize))
 			self:set(quad)
 		end
 	end
