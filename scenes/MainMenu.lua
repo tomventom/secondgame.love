@@ -33,7 +33,7 @@ function MM:new(sceneMgr)
 	self.em:add(self.label)
 	self.em:add(self.testLabel)
 
-	self.click = function(button) self:onClick(button) end
+	self.buttonClick = function(button) self:onClick(button) end
 	self.sliderChanged = function(slider) self:onSliderChanged(slider) end
 
 end
@@ -42,13 +42,13 @@ local entered = false
 
 function MM:enter()
 	MM.super.enter(self)
-	_G.events:hook("onButtonClick", self.click)
+	_G.events:hook("onButtonClick", self.buttonClick)
 	_G.events:hook("onSliderChanged", self.sliderChanged)
 end
 
 function MM:exit()
 	MM.super.exit(self)
-	_G.events:unhook("onButtonClick", self.click)
+	_G.events:unhook("onButtonClick", self.buttonClick)
 	_G.events:unhook("onSliderChanged", self.sliderChanged)
 end
 
@@ -61,9 +61,9 @@ function MM:onSliderChanged(slider)
 end
 
 function MM:onClick(button)
-	print("Button clicked: " .. button.text)
 	if button.text == "Start" then
 		self.sceneMgr:switch("Test")
+		-- button:enabled(false)
 	elseif button.text == "Exit" then
 		love.event.quit()
 	end
@@ -83,7 +83,7 @@ function MM:update(dt)
 	if down and not prevDown then
 		if U.pointInRect({x = xPos, y = yPos}, self.tf:getRect()) then
 			self.tf:setFocus(true)
-		else
+		elseif self.buttonClick then
 			self.tf:setFocus(false)
 		end
 	end

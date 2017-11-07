@@ -24,7 +24,7 @@ function EM:add(entity)
     -- add additional table entries that need to exist in all entities
     entity.layer = entity.layer or 1
     entity.started = entity.started or false
-    entity.enabled = entity.enabled or true
+    entity.enabled = (entity.enabled == nil) or entity.enabled
     self.entities[#self.entities + 1] = entity
 
     -- TODO: sort the entities by layer
@@ -32,7 +32,7 @@ function EM:add(entity)
 end
 
 function EM:onEnter()
-    for i = 1, #self.entities do
+    for i = #self.entities, 1, -1 do
         local e = self.entities[i]
         if e.onEnter then e:onEnter() end
     end
@@ -46,7 +46,7 @@ function EM:onExit()
 end
 
 function EM:update(dt)
-    for i = 1, #self.entities do
+    for i = #self.entities, 1, -1 do
         local e = self.entities[i]
 
         -- if the entity requests removal then remove it
@@ -54,7 +54,6 @@ function EM:update(dt)
             e.remove = false
             if e.onRemove then e:onRemove() end
             table.remove(self.entities, i)
-            i = i - 1
         end
 
         if e.enabled then
@@ -70,7 +69,7 @@ end
 
 function EM:draw()
     for i = 1, #self.entities do
-        if self.entities[i].enabled then
+        if self.entities[i].enabled and self.entities[i].draw then
             self.entities[i]:draw()
         end
     end

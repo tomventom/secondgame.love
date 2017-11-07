@@ -23,7 +23,7 @@ end
 
 local entered = false
 function T:enter()
-	T.super.enter(self)	
+	T.super.enter(self)
 	if not entered then
 		entered = true
 		spr = Sprite(heroAtlas, 100, 100, 16, 16, 4, 4, 0)
@@ -48,7 +48,7 @@ function T:update(dt)
 end
 
 function T:draw()
-	love.graphics.clear(80, 80, 200)
+	love.graphics.clear(128, 128, 128)
 	self.super.draw(self)
 end
 
